@@ -166,5 +166,31 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
   }
 }
+
+@utility bg-ink-gradient {
+  background-image: var(--gradient-ink);
+}
+
+@utility bg-gold-gradient {
+  background-image: var(--gradient-gold);
+}
+
+@utility shadow-gold-glow {
+  box-shadow: var(--shadow-gold);
+}
+
+@utility shadow-soft-card {
+  box-shadow: var(--shadow-card);
+}
+
