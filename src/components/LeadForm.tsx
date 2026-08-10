@@ -1,21 +1,50 @@
 import { useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { enviarLead } from "@/lib/lead.functions";
 import formIlustracao from "@/assets/form-ilustracao.png";
 
 export function LeadForm() {
   const [enviado, setEnviado] = useState(false);
+  const [enviando, setEnviando] = useState(false);
+  const submitLead = useServerFn(enviarLead);
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setEnviado(true);
-    toast.success("Recebemos seus dados!", {
-      description: "Nosso time de especialistas entra em contato em breve.",
-    });
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    const payload = {
+      contact_name: String(formData.get("nome") ?? ""),
+      contact_sobrenome: String(formData.get("sobrenome") ?? ""),
+      contact_email: String(formData.get("email") ?? ""),
+      contact_telefone: String(formData.get("celular") ?? ""),
+      contact_nome_empresa: String(formData.get("empresa") ?? ""),
+      contact_importou: String(formData.get("jaImportou") ?? ""),
+      contact_quanto: String(formData.get("investimento") ?? ""),
+      contact_qual: String(formData.get("produto") ?? ""),
+    };
+
+    setEnviando(true);
+    try {
+      const result = await submitLead({ data: payload });
+      if (!result.ok) throw new Error("webhook");
+      setEnviado(true);
+      toast.success("Recebemos seus dados!", {
+        description: "Nosso time de especialistas entra em contato em breve.",
+      });
+    } catch {
+      toast.error("Não conseguimos enviar seus dados", {
+        description: "Tente novamente em alguns instantes.",
+      });
+    } finally {
+      setEnviando(false);
+    }
   }
 
   return (
@@ -51,17 +80,30 @@ export function LeadForm() {
           <div className="grid gap-5 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="nome">Nome*</Label>
-              <Input id="nome" name="nome" required className="bg-background" />
+              <Input id="nome" name="nome" required maxLength={100} className="bg-background" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="sobrenome">Sobrenome*</Label>
-              <Input id="sobrenome" name="sobrenome" required className="bg-background" />
+              <Input
+                id="sobrenome"
+                name="sobrenome"
+                required
+                maxLength={100}
+                className="bg-background"
+              />
             </div>
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="email">Email*</Label>
-            <Input id="email" name="email" type="email" required className="bg-background" />
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              required
+              maxLength={255}
+              className="bg-background"
+            />
           </div>
 
           <div className="space-y-2">
@@ -71,6 +113,7 @@ export function LeadForm() {
               name="celular"
               type="tel"
               required
+              maxLength={30}
               placeholder="(00) 00000-0000"
               className="bg-background"
             />
@@ -78,7 +121,7 @@ export function LeadForm() {
 
           <div className="space-y-2">
             <Label htmlFor="empresa">Qual o nome da sua empresa?</Label>
-            <Input id="empresa" name="empresa" className="bg-background" />
+            <Input id="empresa" name="empresa" maxLength={150} className="bg-background" />
           </div>
 
           <fieldset className="space-y-3">
@@ -117,11 +160,11 @@ export function LeadForm() {
 
           <div className="space-y-2">
             <Label htmlFor="produto">Qual produto pretende importar?*</Label>
-            <Input id="produto" name="produto" required className="bg-background" />
+            <Input id="produto" name="produto" required maxLength={200} className="bg-background" />
           </div>
 
-          <Button type="submit" variant="gold" size="xl" className="w-full">
-            Fale com a gente!
+          <Button type="submit" variant="gold" size="xl" className="w-full" disabled={enviando}>
+            {enviando ? "Enviando..." : "Fale com a gente!"}
           </Button>
 
           <p className="text-center text-xs text-muted-foreground">
