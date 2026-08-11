@@ -4,6 +4,9 @@ import { z } from "zod";
 const WEBHOOK_URL =
   "https://functions-api.clint.digital/endpoints/integration/webhook/82a41510-0bbd-46eb-8990-910625e72b2c";
 
+const SHEETS_BACKUP_URL =
+  "https://script.google.com/macros/s/AKfycbxD-nTdyda0aoGlBxMq33fOvM25ExuoMK88PhjreI5Sc-cjTXlIgx_1rpSFrmYAyoYf4A/exec";
+
 const leadSchema = z.object({
   contact_name: z.string().trim().min(1).max(100),
   contact_sobrenome: z.string().trim().min(1).max(100),
@@ -18,16 +21,45 @@ const leadSchema = z.object({
 export const enviarLead = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => leadSchema.parse(input))
   .handler(async ({ data }) => {
-    const response = await fetch(WEBHOOK_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+    const [clintResult, sheetsResult] = await Promise.allSettled([
+      sendLeadToClint(data),
+      backupLeadToSheets(data),
+    ]);
 
-    if (!response.ok) {
-      console.error("Clint webhook failed", response.status, await response.text());
+    if (clintResult.status === "rejected") {
+      console.error("Clint webhook failed", clintResult.reason);
+    }
+    if (sheetsResult.status === "rejected") {
+      console.error("Sheets backup failed", sheetsResult.reason);
+    }
+
+    if (clintResult.status === "rejected" && sheetsResult.status === "rejected") {
       return { ok: false as const };
     }
 
     return { ok: true as const };
   });
+
+async function sendLeadToClint(data: z.infer<typeof leadSchema>) {
+  const response = await fetch(WEBHOOK_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Clint webhook responded ${response.status}: ${await response.text()}`);
+  }
+}
+
+async function backupLeadToSheets(data: z.infer<typeof leadSchema>) {
+  const response = await fetch(SHEETS_BACKUP_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Sheets backup responded ${response.status}: ${await response.text()}`);
+  }
+}
