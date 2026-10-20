@@ -244,3 +244,37 @@
   animation: links-dots 14s linear infinite;
 }
 .links-orbit { animation: links-spin 40s linear infinite; }
+
+/* Abertura animada do multilinks */
+@keyframes intro-ring { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+@keyframes intro-logo {
+  from { opacity: 0; transform: scale(0.6); filter: blur(10px); }
+  to { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+@keyframes intro-word {
+  from { opacity: 0; letter-spacing: 0.1em; }
+  to { opacity: 1; letter-spacing: 0.65em; }
+}
+@keyframes intro-line { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes intro-fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes intro-glow {
+  from { opacity: 0; transform: scale(0.6); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes intro-out { to { opacity: 0; transform: scale(1.15); filter: blur(6px); } }
+.intro-glow {
+  background: radial-gradient(circle at 50% 45%, oklch(0.45 0.13 262 / 0.7), transparent 60%);
+  animation: intro-glow 1.6s ease-out both;
+}
+.intro-ring {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  filter: drop-shadow(0 0 6px rgb(245 180 40 / 0.7));
+  animation: intro-ring 1.2s cubic-bezier(0.65, 0, 0.35, 1) 0.2s forwards;
+}
+.intro-logo { opacity: 0; animation: intro-logo 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.7s forwards; }
+.intro-word { opacity: 0; animation: intro-word 1s cubic-bezier(0.22, 1, 0.36, 1) 1.3s forwards; }
+.intro-line { transform: scaleX(0); animation: intro-line 0.9s cubic-bezier(0.65, 0, 0.35, 1) 1.6s forwards; }
+.intro-tag { opacity: 0; animation: intro-fade 0.7s ease-out 2s forwards; }
+.intro-skip { opacity: 0; animation: intro-fade 0.5s ease-out 1s forwards; }
+.intro-out { animation: intro-out 0.7s cubic-bezier(0.65, 0, 0.35, 1) forwards; pointer-events: none; }

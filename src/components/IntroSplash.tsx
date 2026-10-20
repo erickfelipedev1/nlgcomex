@@ -1,0 +1,64 @@
+import { useEffect, useState } from "react";
+
+const DURACAO = 3200; // ms até começar a sair
+const SAIDA = 700; // ms da transição de saída
+const CHAVE = "nlg-intro-vista";
+
+/** Abertura animada em tela cheia. Toque para pular; aparece uma vez por sessão. */
+export function IntroSplash({ onDone }: { onDone: () => void }) {
+  const [fase, setFase] = useState<"on" | "saindo" | "off">("on");
+
+  useEffect(() => {
+    let vista = false;
+    try {
+      vista = sessionStorage.getItem(CHAVE) === "1";
+      sessionStorage.setItem(CHAVE, "1");
+    } catch {
+      // armazenamento bloqueado: mostra a abertura normalmente
+    }
+    if (vista) {
+      setFase("off");
+      onDone();
+      return;
+    }
+    const t = setTimeout(() => setFase("saindo"), DURACAO);
+    return () => clearTimeout(t);
+  }, [onDone]);
+
+  useEffect(() => {
+    if (fase !== "saindo") return;
+    onDone();
+    const t = setTimeout(() => setFase("off"), SAIDA);
+    return () => clearTimeout(t);
+  }, [fase, onDone]);
+
+  if (fase === "off") return null;
+
+  return (
+    <div
+      role="presentation"
+      onClick={() => setFase((f) => (f === "on" ? "saindo" : f))}
+      className={`intro fixed inset-0 z-50 flex cursor-pointer flex-col items-center justify-center bg-navy text-navy-foreground ${
+        fase === "saindo" ? "intro-out" : ""
+      }`}
+    >
+      <div className="intro-glow absolute inset-0" />
+
+      <div className="relative flex h-36 w-36 items-center justify-center">
+        <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full -rotate-90">
+          <circle cx="50" cy="50" r="47" fill="none" stroke="rgb(245 180 40 / 0.15)" strokeWidth="1" />
+          <circle className="intro-ring" cx="50" cy="50" r="47" fill="none" stroke="rgb(245 180 40)" strokeWidth="1.6" strokeLinecap="round" pathLength="100" />
+        </svg>
+        <span className="intro-logo font-display text-4xl font-bold text-gold">NLG</span>
+      </div>
+
+      <p className="intro-word relative mt-6 font-display text-lg font-semibold uppercase">Comex</p>
+      <span className="intro-line relative mt-3 block h-px w-40 bg-gradient-to-r from-transparent via-gold to-transparent" />
+      <p className="intro-tag relative mt-4 px-6 text-center text-xs uppercase tracking-[0.3em] text-gold">
+        Comércio exterior para o mundo
+      </p>
+
+      <span className="intro-skip absolute bottom-8 text-[11px] text-navy-foreground/40">toque para pular</span>
+    </div>
+  );
+}

@@ -1,4 +1,6 @@
+import { useCallback, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import { IntroSplash } from "@/components/IntroSplash";
 import { NetworkBackground } from "@/components/NetworkBackground";
 import { MessageCircle, Youtube, Linkedin, Globe, ArrowUpRight } from "lucide-react";
 
@@ -38,10 +40,15 @@ export const Route = createFileRoute("/links")({
 });
 
 function Links() {
+  const [pronto, setPronto] = useState(false);
+  const concluir = useCallback(() => setPronto(true), []);
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-navy text-navy-foreground">
+      <IntroSplash onDone={concluir} />
       <NetworkBackground />
-      <div className="relative mx-auto flex max-w-md flex-col items-center px-4 py-12">
+      {/* key remonta o conteúdo para a entrada em cascata tocar depois da abertura */}
+      <div key={pronto ? "pronto" : "intro"} className="relative mx-auto flex max-w-md flex-col items-center px-4 py-12">
         <div className="links-rise links-pulse flex h-24 w-24 items-center justify-center rounded-full border-2 border-gold bg-navy-foreground/5 font-display text-2xl font-bold text-gold">
           NLG
         </div>
