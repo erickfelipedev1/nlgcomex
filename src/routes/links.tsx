@@ -1,12 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { MessageCircle, Ship, FileText, Instagram, Youtube, Linkedin, Globe, ArrowUpRight } from "lucide-react";
+import { MessageCircle, Youtube, Linkedin, Globe, ArrowUpRight } from "lucide-react";
 
 const TITULO = "NLG Comex | Links";
 const DESCRICAO = "Importação da China com assessoria completa. Fale com a NLG Comex.";
 
 // TODO: ajustar números/URLs reais antes de publicar.
 const WHATSAPP = "5500000000000";
-const INSTAGRAM = "https://www.instagram.com/nlgcomex";
 const YOUTUBE = "https://www.youtube.com/@nlgcomex";
 const LINKEDIN = "https://www.linkedin.com/company/nlgcomex";
 const SITE = "https://nlgcomex.com.br";
@@ -19,20 +18,7 @@ const links = [
     icone: MessageCircle,
     destaque: true,
   },
-  {
-    titulo: "Importe da China com a NLG",
-    sub: "Estudo de viabilidade gratuito",
-    href: "/",
-    icone: Ship,
-  },
-  {
-    titulo: "Materiais gratuitos",
-    sub: "Guia de importação",
-    href: "https://materiais.nlgcomex.com.br/importar-china",
-    icone: FileText,
-  },
   { titulo: "Site institucional", sub: "Conheça a NLG Comex", href: SITE, icone: Globe },
-  { titulo: "Instagram", sub: "@nlgcomex", href: INSTAGRAM, icone: Instagram },
   { titulo: "YouTube", sub: "Vídeos sobre importação", href: YOUTUBE, icone: Youtube },
   { titulo: "LinkedIn", sub: "NLG Comex", href: LINKEDIN, icone: Linkedin },
 ];
