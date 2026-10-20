@@ -1,4 +1,4 @@
-// Máscara de continentes 144x72 (equirretangular), 1 bit por célula, base64. Fonte: Natural Earth 110m.
+// MÃ¡scara de continentes 144x72 (equirretangular), 1 bit por cÃ©lula, base64. Fonte: Natural Earth 110m.
 export const LAND_W = 144;
 export const LAND_H = 72;
 export const LAND_B64 =
