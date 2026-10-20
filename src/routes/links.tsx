@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { NetworkBackground } from "@/components/NetworkBackground";
 import { MessageCircle, Youtube, Linkedin, Globe, ArrowUpRight } from "lucide-react";
 
 const TITULO = "NLG Comex | Links";
@@ -38,8 +39,9 @@ export const Route = createFileRoute("/links")({
 
 function Links() {
   return (
-    <main className="min-h-screen bg-navy text-navy-foreground">
-      <div className="mx-auto flex max-w-md flex-col items-center px-4 py-12">
+    <main className="relative min-h-screen overflow-hidden bg-navy text-navy-foreground">
+      <NetworkBackground />
+      <div className="relative mx-auto flex max-w-md flex-col items-center px-4 py-12">
         <div className="links-rise links-pulse flex h-24 w-24 items-center justify-center rounded-full border-2 border-gold bg-navy-foreground/5 font-display text-2xl font-bold text-gold">
           NLG
         </div>
