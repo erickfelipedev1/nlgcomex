@@ -6,8 +6,8 @@ const DESCRICAO = "Importação da China com assessoria completa. Fale com a NLG
 
 // TODO: ajustar números/URLs reais antes de publicar.
 const WHATSAPP = "5500000000000";
-const YOUTUBE = "https://www.youtube.com/@nlgcomex";
-const LINKEDIN = "https://www.linkedin.com/company/nlgcomex";
+const YOUTUBE = "https://www.youtube.com/@nowlogisticsgroup";
+const LINKEDIN = "https://www.linkedin.com/company/now-logistics-group-company";
 const SITE = "https://nlgcomex.com.br";
 
 const links = [
