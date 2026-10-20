@@ -2,28 +2,23 @@ import { useEffect, useState } from "react";
 
 const DURACAO = 3200; // ms até começar a sair
 const SAIDA = 700; // ms da transição de saída
-const CHAVE = "nlg-intro-vista";
 
-/** Abertura animada em tela cheia. Toque para pular; aparece uma vez por sessão. */
+/** Abertura animada em tela cheia, a cada carregamento. Toque para pular. */
 export function IntroSplash({ onDone }: { onDone: () => void }) {
   const [fase, setFase] = useState<"on" | "saindo" | "off">("on");
 
   useEffect(() => {
-    let vista = false;
-    try {
-      vista = sessionStorage.getItem(CHAVE) === "1";
-      sessionStorage.setItem(CHAVE, "1");
-    } catch {
-      // armazenamento bloqueado: mostra a abertura normalmente
-    }
-    if (vista) {
-      setFase("off");
-      onDone();
-      return;
-    }
     const t = setTimeout(() => setFase("saindo"), DURACAO);
-    return () => clearTimeout(t);
-  }, [onDone]);
+    // Voltar pelo histórico restaura a página do cache sem a intro: recarrega para tocar de novo.
+    const aoMostrar = (e: PageTransitionEvent) => {
+      if (e.persisted) window.location.reload();
+    };
+    window.addEventListener("pageshow", aoMostrar);
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener("pageshow", aoMostrar);
+    };
+  }, []);
 
   useEffect(() => {
     if (fase !== "saindo") return;
