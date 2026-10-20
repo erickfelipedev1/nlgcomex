@@ -209,7 +209,11 @@
   100% { transform: translateX(260%) skewX(-20deg); }
 }
 .links-rise { opacity: 0; animation: links-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-.links-pulse { animation: links-pulse 2.6s ease-out infinite; }
+.links-rise.links-pulse {
+  animation:
+    links-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+    links-pulse 2.6s ease-out 0.6s infinite;
+}
 .links-shine::after {
   content: "";
   position: absolute;
