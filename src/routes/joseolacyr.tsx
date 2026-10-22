@@ -6,6 +6,7 @@ import { IntroSplash } from "@/components/IntroSplash";
 import { NetworkBackground } from "@/components/NetworkBackground";
 import { LogoOlacyr } from "@/components/jose/LogoOlacyr";
 import fotoPalco from "@/assets/jose/olacyr-palco.jpg";
+import logoHorizontal from "@/assets/jose/logo-horizontal.png";
 
 const TITULO = "José Olacyr | Diretor Executivo · Grupo Now";
 const DESCRICAO =
@@ -92,7 +93,11 @@ function JoseOlacyr() {
             className="jose-ken absolute inset-0 h-full w-full object-cover object-[70%_20%]"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--jo-navy)]/10 via-[var(--jo-navy)]/20 to-[var(--jo-navy)]" />
-          <LogoOlacyr className="jose-wipe absolute bottom-3 left-1/2 w-44 -translate-x-1/2 text-[var(--jo-creme)]" />
+          <img
+            src={logoHorizontal}
+            alt="José Olacyr, Diretor Executivo"
+            className="jose-wipe absolute bottom-4 left-1/2 w-[min(78%,320px)] -translate-x-1/2"
+          />
         </header>
 
         <div className="px-5">
