@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as JoseolacyrRouteImport } from './routes/joseolacyr'
 import { Route as LinksRouteImport } from './routes/links'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JoseolacyrRoute = JoseolacyrRouteImport.update({
+  id: '/joseolacyr',
+  path: '/joseolacyr',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LinksRoute = LinksRouteImport.update({
@@ -25,27 +31,31 @@ const LinksRoute = LinksRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/joseolacyr': typeof JoseolacyrRoute
   '/links': typeof LinksRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/joseolacyr': typeof JoseolacyrRoute
   '/links': typeof LinksRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/joseolacyr': typeof JoseolacyrRoute
   '/links': typeof LinksRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/links'
+  fullPaths: '/' | '/joseolacyr' | '/links'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/links'
-  id: '__root__' | '/' | '/links'
+  to: '/' | '/joseolacyr' | '/links'
+  id: '__root__' | '/' | '/joseolacyr' | '/links'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  JoseolacyrRoute: typeof JoseolacyrRoute
   LinksRoute: typeof LinksRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/joseolacyr': {
+      id: '/joseolacyr'
+      path: '/joseolacyr'
+      fullPath: '/joseolacyr'
+      preLoaderRoute: typeof JoseolacyrRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/links': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  JoseolacyrRoute: JoseolacyrRoute,
   LinksRoute: LinksRoute,
 }
 export const routeTree = rootRouteImport
