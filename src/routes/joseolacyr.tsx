@@ -9,7 +9,7 @@ import fotoPalco from "@/assets/jose/olacyr-palco.jpg";
 
 const TITULO = "José Olacyr | Diretor Executivo · Grupo Now";
 const DESCRICAO =
-  "Sócio fundador do Grupo Now. Jornada 4S, Now Logistics Group, JOG Corp e Now Digital Lab.";
+  "Sócio fundador do Grupo Now. Jornada 4S, Now Logistics Group, JOG Corp e Now D.gital.";
 
 // Paleta do manual: creme #f5e4d0 e ardósia #81939f sobre navy #081e36.
 const CREME = "245, 228, 208";
@@ -29,7 +29,7 @@ const empresas: { nome: string; sobre: string; href: string }[] = [
   { nome: "Now Logistics Group", sobre: "Comércio exterior e logística", href: "https://www.instagram.com/nowlogisticsgroup" },
   { nome: "Jornada 4S", sobre: "Imersão para empresários", href: "https://jornada4s.gruponow.com.br" },
   { nome: "JOG Corp", sobre: "@jogcorp", href: "https://www.instagram.com/jogcorp" },
-  { nome: "Now Digital Lab", sobre: "Marketing e tecnologia", href: "https://nowdigitallab.com.br" },
+  { nome: "Now D.gital", sobre: "Solução digital de marca e performance", href: "https://now-dgital.vercel.app" },
 ];
 
 const externo = { target: "_blank", rel: "noopener noreferrer" } as const;
