@@ -1,6 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
 
-const DURACAO = 3200; // ms até começar a sair
 const SAIDA = 700; // ms da transição de saída
 
 type IntroProps = {
@@ -11,6 +10,8 @@ type IntroProps = {
   /** Substitui o anel + textos padrão por uma abertura própria. */
   conteudo?: ReactNode;
   className?: string;
+  /** ms até começar a sair. */
+  duracao?: number;
 };
 
 /** Abertura animada em tela cheia, a cada carregamento. Toque para pular. */
@@ -21,11 +22,12 @@ export function IntroSplash({
   frase,
   conteudo,
   className = "bg-navy text-navy-foreground",
+  duracao = 3200,
 }: IntroProps) {
   const [fase, setFase] = useState<"on" | "saindo" | "off">("on");
 
   useEffect(() => {
-    const t = setTimeout(() => setFase("saindo"), DURACAO);
+    const t = setTimeout(() => setFase("saindo"), duracao);
     // Voltar pelo histórico restaura a página do cache sem a intro: recarrega para tocar de novo.
     const aoMostrar = (e: PageTransitionEvent) => {
       if (e.persisted) window.location.reload();

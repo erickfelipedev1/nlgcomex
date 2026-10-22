@@ -25,12 +25,12 @@ const redes: { nome: string; href: string; icone: Icone }[] = [
   { nome: "E-mail", href: "mailto:olacyr@gruponow.com.br", icone: Mail },
 ];
 
-// TODO: confirmar descrições e URLs (NLG e JOG Corp apontam para o Instagram).
+// Cada empresa aponta para o Instagram da marca.
 const empresas: { nome: string; sobre: string; href: string }[] = [
-  { nome: "Now Logistics Group", sobre: "Comércio exterior e logística", href: "https://www.instagram.com/nowlogisticsgroup" },
-  { nome: "Jornada 4S", sobre: "Imersão para empresários", href: "https://jornada4s.gruponow.com.br" },
+  { nome: "Now Logistics Group", sobre: "@nowlogisticsgroup", href: "https://www.instagram.com/nowlogisticsgroup" },
+  { nome: "Jornada 4S", sobre: "@jornada4s", href: "https://www.instagram.com/jornada4s" },
   { nome: "JOG Corp", sobre: "@jogcorp", href: "https://www.instagram.com/jogcorp" },
-  { nome: "Now D.gital", sobre: "Solução digital de marca e performance", href: "https://now-dgital.vercel.app" },
+  { nome: "Now D.gital", sobre: "@nowdigitallab", href: "https://www.instagram.com/nowdigitallab" },
 ];
 
 const externo = { target: "_blank", rel: "noopener noreferrer" } as const;
@@ -73,12 +73,13 @@ function JoseOlacyr() {
     <main className="jose relative min-h-screen overflow-hidden">
       <IntroSplash
         onDone={concluir}
+        duracao={1500}
         className="jose"
         conteudo={
           <div className="relative flex flex-col items-center">
-            <LogoOlacyr className="jose-wipe w-60 text-[var(--jo-creme)]" />
-            <span className="intro-line mt-8 block h-px w-32 bg-gradient-to-r from-transparent via-[var(--jo-ardosia)] to-transparent" />
-            <span className="intro-tag mt-4 text-[11px] uppercase tracking-[0.4em] text-[var(--jo-ardosia)]">Grupo Now</span>
+            <LogoOlacyr className="jose-wipe jose-wipe-rapido w-60 text-[var(--jo-creme)]" />
+            <span style={atraso(700)} className="intro-line mt-8 block h-px w-32 bg-gradient-to-r from-transparent via-[var(--jo-ardosia)] to-transparent" />
+            <span style={atraso(900)} className="intro-tag mt-4 text-[11px] uppercase tracking-[0.4em] text-[var(--jo-ardosia)]">Grupo Now</span>
           </div>
         }
       />
