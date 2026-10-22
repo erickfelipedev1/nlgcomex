@@ -86,11 +86,11 @@ function JoseOlacyr() {
 
       <div key={pronto ? "pronto" : "intro"} className="relative mx-auto max-w-md pb-12">
         {/* Foto com canto arredondado assimétrico (elemento do manual) e logo sobreposto */}
-        <header className="links-rise relative h-[min(68vh,560px)] overflow-hidden rounded-b-[56px]">
+        <header className="links-rise relative aspect-[4/5] max-h-[620px] w-full overflow-hidden rounded-b-[56px]">
           <img
             src={fotoPalco}
             alt="José Olacyr palestrando"
-            className="jose-ken absolute inset-0 h-full w-full object-cover object-[70%_20%]"
+            className="jose-ken absolute inset-0 h-full w-full object-cover object-[64%_0%]"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--jo-navy)]/10 via-[var(--jo-navy)]/20 to-[var(--jo-navy)]" />
           <img
