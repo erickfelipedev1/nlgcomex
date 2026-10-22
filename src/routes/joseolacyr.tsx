@@ -92,7 +92,7 @@ function JoseOlacyr() {
             className="jose-ken absolute inset-0 h-full w-full object-cover object-[70%_20%]"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--jo-navy)]/10 via-[var(--jo-navy)]/20 to-[var(--jo-navy)]" />
-          <LogoOlacyr className="jose-wipe absolute bottom-8 left-6 w-52 text-[var(--jo-creme)]" />
+          <LogoOlacyr className="jose-wipe absolute bottom-7 right-5 w-44 text-[var(--jo-creme)]" />
         </header>
 
         <div className="px-5">
