@@ -97,8 +97,8 @@ function JoseOlacyr() {
 
         <div className="px-5">
           <p style={atraso(500)} className="links-rise mt-6 text-sm leading-relaxed text-[var(--jo-ardosia)]">
-            Sócio fundador do <span className="text-[var(--jo-creme)]">Grupo Now</span> e diretor executivo de quatro
-            empresas, do comércio exterior ao marketing digital.
+            Sócio fundador do <span className="text-[var(--jo-creme)]">Grupo Now</span> e sócio executivo de mais de
+            10 frentes de negócios, do comércio exterior ao marketing digital.
           </p>
 
           <ul style={atraso(600)} className="links-rise mt-5 flex gap-2.5">
