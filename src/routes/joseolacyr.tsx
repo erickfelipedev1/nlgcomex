@@ -1,6 +1,6 @@
 import { useCallback, useState, type ComponentType } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRight, AtSign, Instagram, Mail } from "lucide-react";
+import { ArrowRight, AtSign, Instagram, Linkedin, Mail } from "lucide-react";
 
 import { IntroSplash } from "@/components/IntroSplash";
 import { NetworkBackground } from "@/components/NetworkBackground";
@@ -19,6 +19,7 @@ type Icone = ComponentType<{ className?: string }>;
 
 const redes: { nome: string; href: string; icone: Icone }[] = [
   { nome: "Instagram", href: "https://www.instagram.com/joseolacyr", icone: Instagram },
+  { nome: "LinkedIn", href: "https://www.linkedin.com/in/jos%C3%A9-olacyr-044400a1", icone: Linkedin },
   { nome: "Threads", href: "https://www.threads.net/@joseolacyr", icone: AtSign },
   { nome: "E-mail", href: "mailto:olacyr@gruponow.com.br", icone: Mail },
 ];
@@ -115,18 +116,6 @@ function JoseOlacyr() {
             ))}
           </ul>
 
-          <a
-            href="https://nlgcomex.com.br/blog"
-            {...externo}
-            style={atraso(700)}
-            className="links-rise links-shine group relative mt-8 flex items-center gap-4 overflow-hidden rounded-[28px] rounded-tr-md bg-[var(--jo-creme)] px-6 py-5 text-[var(--jo-navy)] transition hover:-translate-y-0.5 active:scale-[0.98]"
-          >
-            <span className="flex-1">
-              <span className="block text-[11px] uppercase tracking-[0.3em] opacity-60">Conteúdo</span>
-              <span className="jose-serif mt-1 block text-2xl leading-none">Leia o blog</span>
-            </span>
-            <Seta className="border-[var(--jo-navy)]/40 transition group-hover:bg-[var(--jo-navy)] group-hover:text-[var(--jo-creme)]" />
-          </a>
 
           <h2 style={atraso(800)} className="links-rise mt-12 text-[11px] uppercase tracking-[0.4em] text-[var(--jo-ardosia)]">
             Empresas
