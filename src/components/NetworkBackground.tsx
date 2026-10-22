@@ -3,12 +3,23 @@ import { RotatingGlobe } from "@/components/RotatingGlobe";
 
 type Node = { x: number; y: number; vx: number; vy: number; r: number; hot: boolean };
 
-const GOLD = "245, 180, 40";
-const WHITE = "200, 215, 240";
 const LINK_DIST = 150;
 
 /** Fundo animado: rede de nós conectados, esfera pontilhada e órbitas douradas. */
-export function NetworkBackground() {
+type Props = {
+  /** Cor dos nós em destaque, "r, g, b". */
+  destaque?: string;
+  /** Cor dos nós e linhas comuns, "r, g, b". */
+  base?: string;
+  /** Mostra globo, esfera e órbitas atrás da rede. */
+  globo?: boolean;
+};
+
+export function NetworkBackground({
+  destaque = "245, 180, 40",
+  base = "200, 215, 240",
+  globo = true,
+}: Props) {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -53,7 +64,7 @@ export function NetworkBackground() {
           const b = nodes[j]!;
           const d = Math.hypot(a.x - b.x, a.y - b.y);
           if (d < LINK_DIST) {
-            ctx.strokeStyle = `rgba(${WHITE}, ${(1 - d / LINK_DIST) * 0.22})`;
+            ctx.strokeStyle = `rgba(${base}, ${(1 - d / LINK_DIST) * 0.22})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
@@ -63,7 +74,7 @@ export function NetworkBackground() {
         }
       }
       for (const n of nodes) {
-        ctx.fillStyle = `rgba(${n.hot ? GOLD : WHITE}, ${n.hot ? 0.95 : 0.7})`;
+        ctx.fillStyle = `rgba(${n.hot ? destaque : base}, ${n.hot ? 0.95 : 0.7})`;
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
         ctx.fill();
@@ -78,19 +89,45 @@ export function NetworkBackground() {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
     };
-  }, []);
+  }, [destaque, base]);
 
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-      <div className="links-glow absolute left-1/2 top-[38%] h-[120vmin] w-[120vmin] -translate-x-1/2 -translate-y-1/2 rounded-full" />
-      <RotatingGlobe className="absolute left-1/2 top-[36%] h-[min(80vmin,640px)] w-[min(80vmin,640px)] -translate-x-1/2 -translate-y-1/2" />
-      <svg
-        viewBox="0 0 200 200"
-        className="links-orbit absolute left-1/2 top-[38%] h-[110vmin] w-[110vmin] -translate-x-1/2 -translate-y-1/2"
-      >
-        <ellipse cx="100" cy="100" rx="96" ry="40" fill="none" stroke="rgb(245 180 40 / 0.55)" strokeWidth="0.5" strokeDasharray="60 240" strokeLinecap="round" transform="rotate(-25 100 100)" />
-        <ellipse cx="100" cy="100" rx="96" ry="64" fill="none" stroke="rgb(245 180 40 / 0.35)" strokeWidth="0.4" strokeDasharray="30 270" strokeLinecap="round" transform="rotate(40 100 100)" />
-      </svg>
+      {globo && (
+        <>
+          <div className="links-glow absolute left-1/2 top-[38%] h-[120vmin] w-[120vmin] -translate-x-1/2 -translate-y-1/2 rounded-full" />
+          <RotatingGlobe className="absolute left-1/2 top-[36%] h-[min(80vmin,640px)] w-[min(80vmin,640px)] -translate-x-1/2 -translate-y-1/2" />
+          <svg
+            viewBox="0 0 200 200"
+            className="links-orbit absolute left-1/2 top-[38%] h-[110vmin] w-[110vmin] -translate-x-1/2 -translate-y-1/2"
+          >
+            <ellipse
+              cx="100"
+              cy="100"
+              rx="96"
+              ry="40"
+              fill="none"
+              stroke="rgb(245 180 40 / 0.55)"
+              strokeWidth="0.5"
+              strokeDasharray="60 240"
+              strokeLinecap="round"
+              transform="rotate(-25 100 100)"
+            />
+            <ellipse
+              cx="100"
+              cy="100"
+              rx="96"
+              ry="64"
+              fill="none"
+              stroke="rgb(245 180 40 / 0.35)"
+              strokeWidth="0.4"
+              strokeDasharray="30 270"
+              strokeLinecap="round"
+              transform="rotate(40 100 100)"
+            />
+          </svg>
+        </>
+      )}
       <canvas ref={ref} className="absolute inset-0 h-full w-full" />
     </div>
   );
